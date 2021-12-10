@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: '/login'
+        redirect: '/home'
     },
     {
         path: '/login',
@@ -24,17 +24,21 @@ const routes = [
         component: Home,
         children: [
             {
-                path: '/vote',
+                path: '/',
+                redirect: 'illustrator'
+            },
+            {
+                path: 'vote',
                 name: 'Vote',
                 component: Vote
             },
             {
-                path: '/result',
+                path: 'result',
                 name: 'Result',
                 component: Result
             },
             {
-                path: '/illustrator',
+                path: 'illustrator',
                 name: 'Illustrator',
                 component: Illustrator
             }
@@ -48,16 +52,20 @@ const router = new VueRouter({
 })
 
 function getToken() {
-    return false;
+    if (localStorage.authenticated.length > 0) {
+        return true
+    } else {
+        return false;
+    }
 }
 
 router.beforeEach((to, from, next) => {
     if (getToken() || to.path === '/login') {
         next();
     } else {
+        this.msgSuccess("下线，请重新登录");
         next('/login');
     }
-
 })
 
 export default router

@@ -1,59 +1,32 @@
 import {GetUrl, PostUrl} from "../js/MyAxios"
 import {CheckValueLength, CheckValueIsNumber} from "../js/Common"
 
-export function PostUserNew(data) {
-    let check = CheckValueLength(data.name, "名称")
-    if (!check.code) {
-        return check
-    }
-    check = CheckValueLength(data.pwd, "密码")
-    if (!check.code) {
-        return check
-    }
+export async function PostUserNew(data) {
     if (data.qq) {
         data.qq = parseInt(data.qq);
     }
-    return {code: true, data: PostUrl("/user/new", data)}
+    return await PostUrl("/user/new", data)
 }
 
-export async function PostUserLogin(qq, pwd) {
-    let check = CheckValueLength(qq, "名称")
-    if (!check.code) {
-        return check
+export async function PostUserLogin(data) {
+    if (data.qq) {
+        data.qq = parseInt(data.qq);
     }
-    check = CheckValueLength(pwd, "密码")
-    if (!check.code) {
-        return check
-    }
-    let result = await PostUrl("/user/login", {
-        qq, pwd
-    });
-    return {code: 1000, data: result};
+    let result = await PostUrl("/user/login", data);
+    return result;
 }
 
-export async function PostIllustratorNew(name, home) {
-    let check = CheckValueLength(name, "画师名称", 1, 32)
-    if (!check.code) {
-        return check
-    }
-    check = CheckValueLength(home, "画师地址", 0, 256)
-    if (!check.code) {
-        return check
-    }
-    let result = await PostUrl("/illustrator/new", {
-        name, home
-    });
-    return {code: 1000, data: result};
+export async function PostIllustratorNew(data) {
+    let result = await PostUrl("/illustrator/new", data);
+    return result;
 }
 
-export async function PostIllustratorAddArts(id, file) {
-    let result = await PostUrl(`/illustrator/add_arts/${id}`, file);
-    return {code: 1000, data: result};
+export async function PostIllustratorAddArts(id, imgList) {
+    return await PostUrl(`/illustrator/add_arts/${id}`, imgList);
 }
 
 export async function GetIllustratorAll() {
-    let result = await GetUrl("/illustrator/all");
-    return {code: 1000, data: result};
+    return await GetUrl("/illustrator/all");
 }
 
 export async function GetIllustrator(id) {
@@ -71,8 +44,17 @@ export async function PostAdminNew() {
     return {code: 1000, data: result};
 }
 
-export function PostAdminLogin(data) {
-    return {code: true, data: PostUrl(`/admin/login`, data)}
+export async function PostAdminLogin(data) {
+    let check = CheckValueLength(data.qq, "名称")
+    if (!check.code) {
+        return check
+    }
+    check = CheckValueLength(data.password, "密码")
+    if (!check.code) {
+        return check
+    }
+    let result = await PostUrl(`/admin/login`, data);
+    return result;
 }
 
 export async function PostAdminAudit(name) {
@@ -86,6 +68,10 @@ export async function PostAdminInvite() {
 }
 
 export async function GetImage(path) {
-    let result = await GetUrl(`/images/${path}`);
-    return {code: 1000, data: result};
+    return await GetUrl(`/images/${path}`);
+}
+
+export async function ImageUpload(file) {
+    const blob = new Blob([file], {type: file.type});
+    return await PostUrl(`/images/upload`,blob);
 }

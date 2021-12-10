@@ -11,3 +11,7 @@ export function CheckValueIsNumber(text, name = text) {
     }
     return {code: true}
 }
+
+export function ToLink(url){
+    window.open(url, "_blank");
+}

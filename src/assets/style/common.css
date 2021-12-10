@@ -1,0 +1,42 @@
+.pointer {
+    cursor: pointer;
+}
+
+/*命名解释：宽(w)度百(b)分比的33.33*/
+.wb33 {
+    width: 33.333%;
+}
+
+.tac{
+    text-align: center;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.mb10{
+    margin-bottom: 10px;
+}
+
+.fs18{
+    font-size: 18px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+    align-items: center;
+}

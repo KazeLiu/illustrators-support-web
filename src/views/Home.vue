@@ -1,26 +1,35 @@
 <template>
-      <div id="nav">
-        <router-link to="/illustrator">添加</router-link> |
-        <router-link to="/vote">投票</router-link> |
-        <router-link to="/result">结果</router-link>
-        <router-view></router-view>
-      </div>
+  <div>
+    <div id="nav">
+      <router-link to="/illustrator">列表</router-link>
+      |
+      <router-link to="/vote">投票</router-link>
+      |
+      <router-link to="/result">结果</router-link>
+    </div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+import AwesomeIcon from "../components/AwesomeIcon"
 
 export default {
   name: "Vote",
   mounted() {
-    this.test();
+
+  },
+  components: {
+    AwesomeIcon
   },
   methods: {
-    test() {
-    }
+
   }
 }
 </script>
 
 <style scoped>
-
+#nav {
+  text-align: center;
+}
 </style>
