@@ -52,7 +52,7 @@ const router = new VueRouter({
 })
 
 function getToken() {
-    if (localStorage.authenticated.length > 0) {
+    if (localStorage.authenticated&&localStorage.authenticated.length > 0) {
         return true
     } else {
         return false;
@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
     if (getToken() || to.path === '/login') {
         next();
     } else {
-        this.msgSuccess("下线，请重新登录");
+        // this.msgSuccess("下线，请重新登录");
         next('/login');
     }
 })

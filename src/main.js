@@ -2,21 +2,21 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import HeyUI from 'heyui';
-import "heyui/themes/index.less";
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import "./assets/style/common.css"
 import "font-awesome/css/font-awesome.min.css"
 
 Vue.config.productionTip = false
 
-Vue.use(HeyUI);
+Vue.use(ElementUI);
 
 Vue.prototype.msgSuccess = function (msg) {
-  this.$Message({ showClose: true, text: msg, type: "success" });
+  this.$message({  message: msg, type: "success" });
 }
 
 Vue.prototype.msgError = function (msg) {
-  this.$Message({ showClose: true, text: msg, type: "error" });
+  this.$message({  message: msg, type: "error" });
 }
 
 new Vue({

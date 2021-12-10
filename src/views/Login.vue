@@ -1,55 +1,43 @@
 <template>
   <div style="width: 400px;margin: auto;margin-top:25vh;">
-    <div class="h-panel">
-      <div class="h-panel-bar">
-        <span class="h-panel-title">欢迎使用</span>
-        <span class="h-panel-right">
-          <h-switchlist :datas="loginTypeValue" @change="model = {};checkValidInRegister()"
-                        v-model="loginType"></h-switchlist>
-        </span>
+
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>欢迎使用</span>
+        <span class="fr">
+         <el-button-group>
+            <el-button size="mini" :type="index == loginType?'success':'primary'" v-for="(item,index) in loginTypeValue"
+                       @click="checkValidInRegister(index)">{{ item }}</el-button>
+          </el-button-group>
+       </span>
       </div>
-      <div class="h-panel-body">
-        <h-form
-            ref="form"
-            :labelWidth="110"
-            labelPosition="right"
-            :model="model"
-            :rules="UserRules"
-        >
-          <h-formitem label="用户名" v-if="loginType != 0" prop="name">
-            <template v-slot:label>
-              <awesome-icon name="user"></awesome-icon>
-              用户名
-            </template>
-            <input type="text" v-model="model.name">
-          </h-formitem>
-          <h-formitem label="QQ" v-if="loginType != 2" prop="qq">
-            <template v-slot:label>
-              <awesome-icon name="qq"></awesome-icon>
-              QQ
-            </template>
-            <input type="text" v-model="model.qq">
-          </h-formitem>
-          <h-formitem label="密码" prop="password">
-            <template v-slot:label>
-              <awesome-icon name="key"></awesome-icon>
-              密码
-            </template>
-            <input type="password" v-model="model.password">
-          </h-formitem>
-          <h-formitem label="邀请码" v-if="loginType == 1" prop="invite_code">
-            <template v-slot:label>
-              <awesome-icon name="plane"></awesome-icon>
-              邀请码
-            </template>
-            <input type="text" v-model="model.invite_code">
-          </h-formitem>
-          <h-button color="primary" v-if="loginType == 0" :loading="isLoading" @click="loginUser">用户登录</h-button>
-          <h-button color="primary" v-if="loginType == 1" :loading="isLoading" @click="submit">注册</h-button>
-          <h-button color="primary" v-if="loginType == 2" :loading="isLoading" @click="loginAdmin">管理员登录</h-button>
-        </h-form>
-      </div>
-    </div>
+      <el-form
+          ref="form"
+          label-width="70px"
+          :model="model"
+          label-position="right"
+          :rules="userRules"
+      >
+        <el-form-item label="用户名" v-if="loginType != 0" prop="name">
+          <el-input type="text" v-model="model.name"></el-input>
+        </el-form-item>
+        <el-form-item label="QQ" v-if="loginType != 2" prop="qq">
+          <el-input type="text" v-model.number="model.qq"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="model.password"></el-input>
+        </el-form-item>
+        <el-form-item label="邀请码" v-if="loginType == 1" prop="invite_code">
+          <el-input type="text" v-model="model.invite_code"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button color="primary" v-if="loginType == 0" :loading="isLoading" @click="loginUser">用户登录</el-button>
+          <el-button color="primary" v-if="loginType == 1" :loading="isLoading" @click="submit">注册</el-button>
+          <el-button color="primary" v-if="loginType == 2" :loading="isLoading" @click="loginAdmin">管理员登录</el-button>
+        </el-form-item>
+
+      </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -61,19 +49,19 @@ export default {
   name: "Home",
   components: {AwesomeIcon},
   mounted() {
-    this.checkValidInRegister();
+    this.checkValidInRegister(0);
   },
   data() {
     return {
       model: {
-        qq: "123456",
+        qq: 123456,
         password: "123456",
       },
       isLogin: false,
       loginType: 0,
-      loginTypeValue: {0: '登录', 1: '注册', 2: '管理员登录'},
+      loginTypeValue: ['登录', '注册', '管理员登录'],
       isLoading: false,
-      UserRules: {}
+      userRules: {}
     }
   },
   methods: {
@@ -108,55 +96,51 @@ export default {
       }
     },
 
-    checkValidInRegister() {
+    checkValidInRegister(type) {
+      if (type != undefined) {
+        this.loginType = type;
+        this.$refs.form.resetFields();
+      }
+      this.model = {};
       if (this.loginType == 0) {
-        this.UserRules = {
-          rules: {
-            qq: {
-              required: true,
-              type: 'number',
-              maxLen: 12,
-            },
-            password: {
-              required: true,
-              maxLen: 256
-            },
-          }
+        this.userRules = {
+          qq: [
+            {required: true, message: '请输入QQ号', trigger: 'blur'},
+            {type: 'integer',min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {min: 3, max: 256, message: '长度在 3 到 256 个字', trigger: 'blur'}
+          ]
         }
       } else if (this.loginType == 1) {
-        this.UserRules = {
-          rules: {
-            name: {
-              required: true,
-              maxLen: 32
-            },
-            qq: {
-              required: true,
-              type: 'number',
-              maxLen: 12,
-            },
-            password: {
-              required: true,
-              maxLen: 256
-            },
-            invite_code: {
-              required: true,
-              maxLen: 256,
-            }
-          }
+        this.userRules = {
+          name: [
+            {required: true, message: '请输入昵称', trigger: 'blur'},
+            {min: 3, max: 32, message: '长度在 3 到 10 个字', trigger: 'blur'}
+          ],
+          qq: [
+            {required: true, message: '请输入QQ号', trigger: 'blur'},
+            {type: 'integer',min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {min: 3, max: 256, message: '长度在 3 到 256 个字', trigger: 'blur'}
+          ],
+          invite_code: [
+            {required: true, message: '请输入邀请码', trigger: 'blur'}
+          ],
         }
       } else if (this.loginType == 2) {
-        this.UserRules = {
-          rules: {
-            name: {
-              required: true,
-              maxLen: 32
-            },
-            password: {
-              required: true,
-              maxLen: 256
-            }
-          }
+        this.userRules = {
+          name: [
+            {required: true, message: '请输入昵称', trigger: 'blur'},
+            {min: 3, max: 32, message: '长度在 3 到 10 个字', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {min: 3, max: 256, message: '长度在 3 到 256 个字', trigger: 'blur'}
+          ],
         }
       }
     }
@@ -164,8 +148,12 @@ export default {
 }
 </script>
 
-<style scoped>
-.h-panel-bar {
-  text-align: left;
+<style lang="less" scoped>
+.el-card__header {
+  .clearfix {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 </style>

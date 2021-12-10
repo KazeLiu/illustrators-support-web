@@ -11,6 +11,10 @@
     text-align: center;
 }
 
+.margin10{
+    margin: 10px;
+}
+
 .ml5 {
     margin-left: 5px;
 }
@@ -21,6 +25,10 @@
 
 .mb10{
     margin-bottom: 10px;
+}
+
+.mt10{
+    margin-top: 10px;
 }
 
 .fs18{
@@ -36,7 +44,16 @@
     align-items: center;
 }
 
+.flex-end{
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .flex-between {
     justify-content: space-between;
     align-items: center;
+}
+
+.fr{
+    float: right;
 }

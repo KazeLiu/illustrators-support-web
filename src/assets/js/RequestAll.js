@@ -2,23 +2,15 @@ import {GetUrl, PostUrl} from "../js/MyAxios"
 import {CheckValueLength, CheckValueIsNumber} from "../js/Common"
 
 export async function PostUserNew(data) {
-    if (data.qq) {
-        data.qq = parseInt(data.qq);
-    }
     return await PostUrl("/user/new", data)
 }
 
 export async function PostUserLogin(data) {
-    if (data.qq) {
-        data.qq = parseInt(data.qq);
-    }
-    let result = await PostUrl("/user/login", data);
-    return result;
+    return await PostUrl("/user/login", data);
 }
 
 export async function PostIllustratorNew(data) {
-    let result = await PostUrl("/illustrator/new", data);
-    return result;
+    return await PostUrl("/illustrator/new", data);
 }
 
 export async function PostIllustratorAddArts(id, imgList) {
@@ -30,8 +22,7 @@ export async function GetIllustratorAll() {
 }
 
 export async function GetIllustrator(id) {
-    let result = await GetUrl(`/illustrator/${id}`);
-    return {code: 1000, data: result};
+   return await GetUrl(`/illustrator/${id}`);
 }
 
 export async function PostIllustrator(id) {
@@ -71,7 +62,11 @@ export async function GetImage(path) {
     return await GetUrl(`/images/${path}`);
 }
 
-export async function ImageUpload(file) {
-    const blob = new Blob([file], {type: file.type});
-    return await PostUrl(`/images/upload`,blob);
+export async function ImageUpload(data) {
+    let formData = new FormData()
+    formData.append('file', data.file,data.file.name)
+    formData.append('src',data.src );
+    // const blob = new Blob([data.file], {type: data.file.type});
+
+    return await PostUrl(`/images/upload`, formData);
 }
