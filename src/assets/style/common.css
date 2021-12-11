@@ -7,6 +7,10 @@
     width: 33.333%;
 }
 
+.wb100{
+    width: 100%;
+}
+
 .tac{
     text-align: center;
 }
@@ -29,6 +33,14 @@
 
 .mt10{
     margin-top: 10px;
+}
+
+.mb5{
+    margin-bottom: 5px;
+}
+
+.mt5{
+    margin-top: 5px;
 }
 
 .fs18{

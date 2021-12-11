@@ -4,6 +4,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>欢迎使用</span>
+        <span>964413011 wyq020222</span>
         <span class="fr">
          <el-button-group>
             <el-button size="mini" :type="index == loginType?'success':'primary'" v-for="(item,index) in loginTypeValue"
@@ -53,10 +54,7 @@ export default {
   },
   data() {
     return {
-      model: {
-        qq: 123456,
-        password: "123456",
-      },
+      model: {},
       isLogin: false,
       loginType: 0,
       loginTypeValue: ['登录', '注册', '管理员登录'],
@@ -89,6 +87,7 @@ export default {
       } else {
         if (this.loginType == 1) {
           this.msgSuccess("注册成功。请重新登录一次");
+          this.loginType = 0;
         } else {
           this.msgSuccess(name);
           this.$router.push("Home");
@@ -106,7 +105,7 @@ export default {
         this.userRules = {
           qq: [
             {required: true, message: '请输入QQ号', trigger: 'blur'},
-            {type: 'integer',min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
+            {type: 'integer', min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
           ],
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
@@ -121,7 +120,7 @@ export default {
           ],
           qq: [
             {required: true, message: '请输入QQ号', trigger: 'blur'},
-            {type: 'integer',min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
+            {type: 'integer', min: 0, max: 999999999999, message: 'QQ必须为数字', trigger: 'blur'}
           ],
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},

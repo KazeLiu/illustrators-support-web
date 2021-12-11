@@ -29,9 +29,9 @@
             <el-divider content-position="left">点赞的人</el-divider>
             {{ item.info.wants.length > 0 ? item.info.wants.join(',') : '还没有人给他点过赞' }}
             <el-divider content-position="left">部分图片预览</el-divider>
-            <el-carousel height="200px">
+            <el-carousel height="300px">
               <el-carousel-item v-for="image in item.info.arts" :key="image.file">
-                <div>来源：{{ image.src }}</div>
+                <div class="tac wb100">来源：{{ image.src ? image.src : "未填写来源" }}</div>
                 <div class="tac margin10">
                   <el-image style="height: 200px;" :src="baseUrl+'/'+image.file" fit="scale-down"></el-image>
                 </div>
@@ -40,6 +40,7 @@
             <div class="flex flex-end mt10">
               <el-button class="wb33" @click="ToLink('https://'+item.info.home)" :block="true">画师主页</el-button>
               <el-button class="wb33" @click="ToLink('https://'+item.sponser.sponsor)" :block="true">捐助页面</el-button>
+              <el-button type="primary" class="wb33" @click="" :block="true">投他一票</el-button>
             </div>
           </div>
         </el-collapse-item>
@@ -49,6 +50,7 @@
     <el-dialog
         title="添加捐助对象"
         :visible.sync="addIllustratorShow"
+        @close="getAllIllustrator()"
         width="30%">
       <el-form
           ref="form"
@@ -80,14 +82,20 @@
     <el-dialog
         :title="'为'+  addIllustratorImageItem.name +'新增展示作品'"
         :visible.sync="addIllustratorImageShow"
+        @close="getAllIllustrator(addIllustratorImageItem)"
         width="30%">
       <div class="tac">
         <div class="mb10">弹出上传成功后你可以点击图片继续选择新图片上传</div>
         <div class="mb10">不绑定画师无法保存图片</div>
-        <upload-image @selectedImage="selectedImage"></upload-image>
+        <el-divider>已上传图片列表</el-divider>
+        <div class="mt5 mb5" v-if="addIllustratorImageFileList.length<=0">暂未上传任何图片</div>
+        <el-image class="mt5 mb5" style="height: 100px;" v-for="image in addIllustratorImageFileList" :src="image"
+                  fit="scale-down"></el-image>
+        <el-divider>上传区域</el-divider>
+        <upload-image ref="uploadImage" @selectedImage="selectedImage"></upload-image>
       </div>
       <div slot="footer">
-        <button class="h-btn" @click="saveIllustratorImage">将图片绑定画师</button>
+        <el-button type="success" @click="saveIllustratorImage">将图片绑定画师</el-button>
       </div>
     </el-dialog>
   </div>
@@ -134,6 +142,7 @@ export default {
       addIllustratorImageShow: false,
       addIllustratorImageItem: {},
       addIllustratorImageList: [],
+      addIllustratorImageFileList: [],
       loadingInfo: false,
       illustratorInfo: {},
     }
@@ -159,6 +168,8 @@ export default {
     },
     getAllIllustrator() {
       this.loadingList = true;
+      this.activeIllustrator = [];
+      this.activeIllustratorSave = [];
       GetIllustratorAll().then(data => {
         this.loadingList = false;
         if (data.code) {
@@ -190,7 +201,9 @@ export default {
             this.illustratorForm.head = data.data.data;
           }
           if (this.addIllustratorImageShow) {
+            this.addIllustratorImageFileList.push(URL.createObjectURL(file.file));
             this.addIllustratorImageList.push(data.data.data);
+            this.$refs.uploadImage.hasImg = false;
           }
         } else {
           this.msgError("图片上传失败");
