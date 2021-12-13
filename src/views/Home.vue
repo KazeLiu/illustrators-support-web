@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home/illustrator">列表</router-link>
 <!--      |-->
-      <router-link to="/home/vote">投票</router-link>
+<!--      <router-link to="/home/vote">投票</router-link>-->
 <!--      |-->
 <!--      <router-link to="/home/result">结果</router-link>-->
     </div>
