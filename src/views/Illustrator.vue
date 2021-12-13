@@ -15,9 +15,10 @@
           <template slot='title'>
               <span class="header-title flex-between" @click="getIllustratorInfo(item)">
                 <span class="flex flex-center">
-                  <img :src="baseUrl+'/'+item.head">
-                  <span class="ml10 fs18">{{item.name}}</span>
-                  <el-tag class="ml10" type="success"><awesome-icon name="thumbs-up"></awesome-icon> {{item.wconts}}</el-tag>
+                  <img :src="baseUrl+'/'+item.head" object-fit: cover;>
+                  <span class="ml10 fs18">{{ item.name }}</span>
+                  <el-tag class="ml10" type="success"><awesome-icon
+                      name="thumbs-up"></awesome-icon> {{ item.wconts }}</el-tag>
                 </span>
                 <span class="header-title-right"
                       @click.stop="addIllustratorImageItem = item;addIllustratorImageShow = true">
@@ -211,8 +212,13 @@ export default {
     },
 
     // 绑定头像
-    selectedImageHeadList(data) {
-      this.illustratorForm.head = data[0].file;
+    selectedImageHeadList(list) {
+      ImageUploads(list).then(data => {
+        if (data.code) {
+          this.illustratorForm.head = data.data[0].data;
+          this.msgSuccess("图片绑定头像成功")
+        }
+      })
     },
     // 绑定展示作品
     selectedImageList(list) {
@@ -238,7 +244,8 @@ export default {
 
 
     }
-  },
+  }
+  ,
 }
 </script>
 
@@ -276,6 +283,7 @@ export default {
 
     img {
       width: 40px;
+      height: 40px;
       border-radius: 50%;
     }
   }
