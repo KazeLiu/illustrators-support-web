@@ -4,4 +4,4 @@
 ### 后台地址  
 https://github.com/Goodjooy/illustrators_support
 ### 预览地址
-https://github.com/LiuZiYang1/illustrators-support-web-dist
+https://liuziyang1.github.io/illustrators-support-web-dist
