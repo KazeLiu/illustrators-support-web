@@ -4,7 +4,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>欢迎使用</span>
-        <span>964413011 wyq020222</span>
+<!--        <span>964413011 wyq020222</span>-->
         <span class="fr">
          <el-button-group>
             <el-button size="mini" :type="index == loginType?'success':'primary'" v-for="(item,index) in loginTypeValue"
