@@ -34,3 +34,4 @@ export function MyImagemin(file, size = 50) {
         })
     })
 }
+

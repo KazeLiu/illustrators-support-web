@@ -90,6 +90,7 @@ export default {
           this.loginType = 0;
         } else {
           this.msgSuccess(name);
+          localStorage.userInfo = JSON.stringify(this.model);
           this.$router.push("Home");
         }
       }

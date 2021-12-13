@@ -22,12 +22,11 @@ export async function GetIllustratorAll() {
 }
 
 export async function GetIllustrator(id) {
-   return await GetUrl(`/illustrator/${id}`);
+    return await GetUrl(`/illustrator/${id}`);
 }
 
 export async function PostIllustrator(id) {
-    let result = await PostUrl(`/illustrator/${id}`);
-    return {code: 1000, data: result};
+    return await PostUrl(`/illustrator/${id}`);
 }
 
 export async function PostAdminNew() {
@@ -64,9 +63,30 @@ export async function GetImage(path) {
 
 export async function ImageUpload(data) {
     let formData = new FormData()
-    formData.append('file', data.file,data.file.name)
-    formData.append('src',data.src );
-    // const blob = new Blob([data.file], {type: data.file.type});
+
+    formData.append('src', data.src);
+    formData.append('file', data.file, data.file.name)
 
     return await PostUrl(`/images/upload`, formData);
+}
+
+export async function ImageUploads(data) {
+    let list = [];
+    data.map(file => {
+        list.push(ImageUpload({file:file.file, src: file.source}));
+    })
+    let result = await Promise.all(list);
+    let resultList = [];
+    result.forEach(item => {
+        if (item.code) {
+            resultList.push(item.data);
+        }
+    });
+    return {code: true, data: resultList};
+    // let formData = new FormData()
+    // formData.append('fileSource', data.map(x => x.source).join(","));
+    // data.map(file => {
+    //     formData.append('file', file.file, file.file.name)
+    // })
+    // return await PostUrl(`/images/uploads`, formData);
 }

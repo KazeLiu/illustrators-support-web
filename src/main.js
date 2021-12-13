@@ -11,6 +11,11 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 
+
+Vue.prototype.msgInfo = function (msg) {
+  this.$message({  message: msg, type: "info" });
+}
+
 Vue.prototype.msgSuccess = function (msg) {
   this.$message({  message: msg, type: "success" });
 }

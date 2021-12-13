@@ -7,15 +7,19 @@
     width: 33.333%;
 }
 
-.wb100{
+.wb100 {
     width: 100%;
 }
 
-.tac{
+.tac {
     text-align: center;
 }
 
-.margin10{
+.margin5 {
+    margin: 5px;
+}
+
+.margin10 {
     margin: 10px;
 }
 
@@ -27,23 +31,27 @@
     margin-left: 10px;
 }
 
-.mb10{
+.mr5 {
+    margin-right: 5px;
+}
+
+.mb10 {
     margin-bottom: 10px;
 }
 
-.mt10{
+.mt10 {
     margin-top: 10px;
 }
 
-.mb5{
+.mb5 {
     margin-bottom: 5px;
 }
 
-.mt5{
+.mt5 {
     margin-top: 5px;
 }
 
-.fs18{
+.fs18 {
     font-size: 18px;
 }
 
@@ -56,7 +64,7 @@
     align-items: center;
 }
 
-.flex-end{
+.flex-end {
     justify-content: flex-end;
     align-items: center;
 }
@@ -66,6 +74,6 @@
     align-items: center;
 }
 
-.fr{
+.fr {
     float: right;
 }
