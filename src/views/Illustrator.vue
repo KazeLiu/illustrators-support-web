@@ -15,7 +15,7 @@
           <template slot='title'>
               <span class="header-title flex-between" @click="getIllustratorInfo(item)">
                 <span class="flex flex-center">
-                  <img :src="baseUrl+'/'+item.head" object-fit: cover;>
+                  <img :src="baseUrl+'/'+item.head" object-fit="cover">
                   <span class="ml10 fs18">{{ item.name }}</span>
                   <el-tag class="ml10" type="success"><awesome-icon
                       name="thumbs-up"></awesome-icon> {{ item.wconts }}</el-tag>
@@ -251,7 +251,7 @@ export default {
 
 <style lang="less">
 .Illustrator-panel {
-  width: 1000px;
+  width: 80%;
   margin: 20px auto;
 
   .h-panel-title {
